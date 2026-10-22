@@ -1,0 +1,7 @@
+.env
+.venv/
+__pycache__/
+state/trades.jsonl
+state/heartbeat.json
+data/
+state/bot.lock

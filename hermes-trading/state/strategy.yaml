@@ -1,0 +1,45 @@
+version: '06'
+entry:
+  indicator: rsi
+  threshold: 45
+  direction: long
+exit:
+  rsi_above: 60
+stop_loss_pct: 2.0
+position_size_r: 0.5
+timeframe: 15m
+trend_filter:
+  indicator: ema
+  fast: 50
+  slow: 200
+  enabled: false
+confirm:
+  enabled: false
+  patterns:
+  - morning_star
+  - three_inside_up
+  - three_outside_up
+  - three_white_soldiers
+  dip_lookback: 4
+lessons:
+- 'Source: 180-day backtest of v05 (Apr-Oct 2026), market hours, 0.2% spread; rules
+  found on first 4 months, checked on last 2.'
+- 'Winners and losers look the same at entry (RSI, trend, volatility, hour, candle
+  patterns): no reliable entry filter found.'
+- Dip-depth filters (4h drop >= 1-1.5%, RSI<30 only) did not beat RSI<45 on the unseen
+  period.
+- 'Tighter stops (1%) and earlier exits (RSI>55 or >50) lost more in BOTH periods:
+  keep stop >= 2% and exit >= 60.'
+- 21 of 35 losing trades were stop-outs; removing the stop was not reliably better
+  and adds crash risk.
+- With 0.2% costs per round trip, no tested variant of this rule was profitable in
+  both periods.
+- 'Daily filter (Oct 2026, 365d check): buying RSI<45 dips only while the previous
+  daily close is 0-3% above its 50-day SMA made +5.97% (48 trades) vs -20.73% (257)
+  without; positive in 3 of 4 quarters, robust to 0-1/0-2% bands and to double costs.
+  Below the SMA or far above it lost.'
+daily_filter:
+  enabled: true
+  sma: 50
+  min_pct: 0.0
+  max_pct: 3.0
